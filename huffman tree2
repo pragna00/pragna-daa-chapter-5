@@ -1,0 +1,32 @@
+class Node:
+    def __init__(self, char, freq):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+def huffman_decoding(encoded_string, root):
+    decoded_string = ""
+    current_node = root
+    for bit in encoded_string:
+        if bit == "0":
+            current_node = current_node.left
+        else:
+            current_node = current_node.right
+        if current_node.char != None:
+            decoded_string += current_node.char
+            current_node = root
+    return decoded_string
+root = Node(None, 0)
+a = Node('a', 0)
+b = Node('b', 0)
+c = Node('c', 0)
+d = Node('d', 0)
+root.left = a
+root.right = Node(None, 0)
+root.right.left = b
+root.right.right = Node(None, 0)
+root.right.right.left = c
+root.right.right.right = d
+encoded_string = "01101101"
+decoded_string = huffman_decoding(encoded_string, root)
+print("Decoded string:", decoded_string)
