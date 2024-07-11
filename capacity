@@ -1,0 +1,16 @@
+def greedy_bin_packing(weights, capacity):
+    containers = []
+    current_container = []
+    for weight in weights:
+        if sum(current_container) + weight <= capacity:
+            current_container.append(weight)
+        else:
+            containers.append(current_container)
+            current_container = [weight]
+    containers.append(current_container)
+    return len(containers), containers
+weights = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+capacity = 100
+min_containers, containers = greedy_bin_packing(weights, capacity)
+print("Minimum containers required:", min_containers)
+print("Containers:", containers)
