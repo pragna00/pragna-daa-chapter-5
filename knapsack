@@ -1,0 +1,16 @@
+def greedy_knapsack(weights, capacity):
+    weights.sort(reverse=True)
+    total_weight = 0
+    loaded_items = []
+    for weight in weights:
+        if total_weight + weight <= capacity:
+            total_weight += weight
+            loaded_items.append(weight)
+        else:
+            break
+    return total_weight, loaded_items
+weights = [10, 20, 30, 40, 50]
+capacity = 100
+max_weight, loaded_items = greedy_knapsack(weights, capacity)
+print("Maximum weight:", max_weight)
+print("Loaded items:", loaded_items)
