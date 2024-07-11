@@ -1,0 +1,22 @@
+def minimumTimeRequired(jobs, k):
+    def canFinish(maxTime):
+        workers = [0] * k
+        for job in jobs:
+            i = 0
+            while i < k and workers[i] + job > maxTime:
+                i += 1
+            if i == k:
+                return False
+            workers[i] += job
+        return True
+    lo, hi = max(jobs), sum(jobs)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if canFinish(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+jobs = [3, 2, 3]
+k = 3
+print(minimumTimeRequired(jobs, k))  # Output: 3
