@@ -1,0 +1,13 @@
+import heapq
+def maxCoins(piles):
+    piles = [-x for x in piles]  # Convert to max heap
+    heapq.heapify(piles)
+    res = 0
+    while piles:
+        heapq.heappop(piles)  # Alice's turn
+        res -= heapq.heappop(piles)  # Your turn
+        if piles:
+            heapq.heappop(piles)  # Bob's turn
+    return -res
+piles = [2, 4, 1, 2, 7, 8]
+print(maxCoins(piles))  # Output: 9
