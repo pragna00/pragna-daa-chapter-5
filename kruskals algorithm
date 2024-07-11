@@ -1,0 +1,50 @@
+class UnionFind:
+    def __init__(self, vertices):
+        self.parent = {v: v for v in vertices}
+        self.rank = {v: 0 for v in vertices}
+    def find(self, item):
+        if self.parent[item] != item:
+            self.parent[item] = self.find(self.parent[item])
+        return self.parent[item]
+    def union(self, set1, set2):
+        root1 = self.find(set1)
+        root2 = self.find(set2)
+        if root1 != root2:
+            if self.rank[root1] > self.rank[root2]:
+                self.parent[root2] = root1
+            else:
+                self.parent[root1] = root2
+                if self.rank[root1] == self.rank[root2]:
+                    self.rank[root2] += 1
+def kruskal_mst(edge_list):
+    vertices = set()
+    for edge in edge_list:
+        vertices.add(edge[0])
+        vertices.add(edge[1])
+    edge_list.sort(key=lambda x: x[2])
+    uf = UnionFind(vertices)
+    mst = []
+    total_weight = 0
+    for edge in edge_list:
+        set1 = uf.find(edge[0])
+        set2 = uf.find(edge[1])
+        if set1 != set2:
+            uf.union(set1, set2)
+            mst.append(edge)
+            total_weight += edge[2]
+    return mst, total_weight
+edge_list = [
+    ('A', 'B', 2),
+    ('A', 'C', 3),
+    ('B', 'C', 1),
+    ('B', 'D', 1),
+    ('B', 'E', 4),
+    ('C', 'F', 5),
+    ('D', 'E', 1),
+    ('E', 'F', 1)
+]
+mst, total_weight = kruskal_mst(edge_list)
+print("Minimum Spanning Tree:")
+for edge in mst:
+    print(f"{edge[0]} -- {edge[1]} : {edge[2]}")
+print(f"Total weight: {total_weight}")
